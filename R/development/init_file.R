@@ -97,5 +97,14 @@ cat(cov_hook, file = ".travis.yml", append = TRUE)
 ##
 cran_txt <- capture.output(devtools::use_cran_badge(pkg = pkg_dir), type = "message")
 cran_link <- cran_txt[length(cran_txt)]
-rm_txt[1] <- paste0(rm_txt[1], " ", cran_txt)
+
+rm_txt[1] <- paste0(rm_txt[1], " ", cran_link)
+
 writeLines(paste0(rm_txt, collapse = "\n"), rm_path)
+
+
+# BUILD INITIAL AND COMMIT CLEAN PACKAGE TO GH ----------------------------
+
+r <- git2r::repository(".")
+git2r::add(r, ".")
+git2r::commit(r, "init files added (pre-build)")
